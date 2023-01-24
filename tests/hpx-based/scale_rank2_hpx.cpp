@@ -91,11 +91,10 @@ TEST_F(blas2_signed_float_fixture, hpx_scale)
         hpx::execution::par, A_e0e1, static_cast<value_type>(2));
     hpx_blas_scale_test_impl(
         hpx::execution::par_unseq, A_e0e1, static_cast<value_type>(2));
-    // FIXME: not yet implemented
-    //#if defined(HPX_HAVE_DATAPAR)
-    //  hpx_blas_scale_test_impl(hpx::execution::simd, A_e0e1, static_cast<value_type>(2));
-    //  hpx_blas_scale_test_impl(hpx::execution::par_simd, A_e0e1, static_cast<value_type>(2));
-    //#endif
+    #if defined(HPX_HAVE_DATAPAR)
+        hpx_blas_scale_test_impl(hpx::execution::simd, A_e0e1, static_cast<value_type>(2));
+        hpx_blas_scale_test_impl(hpx::execution::par_simd, A_e0e1, static_cast<value_type>(2));
+    #endif
 }
 
 TEST_F(blas2_signed_double_fixture, hpx_scale)
@@ -106,11 +105,10 @@ TEST_F(blas2_signed_double_fixture, hpx_scale)
         hpx::execution::par, A_e0e1, static_cast<value_type>(2));
     hpx_blas_scale_test_impl(
         hpx::execution::par_unseq, A_e0e1, static_cast<value_type>(2));
-    // FIXME: not yet implemented
-    //#if defined(HPX_HAVE_DATAPAR)
-    //  hpx_blas_scale_test_impl(hpx::execution::simd, A_e0e1, static_cast<value_type>(2));
-    //  hpx_blas_scale_test_impl(hpx::execution::par_simd, A_e0e1, static_cast<value_type>(2));
-    //#endif
+    #if defined(HPX_HAVE_DATAPAR)
+        hpx_blas_scale_test_impl(hpx::execution::simd, A_e0e1, static_cast<value_type>(2));
+        hpx_blas_scale_test_impl(hpx::execution::par_simd, A_e0e1, static_cast<value_type>(2));
+    #endif
 }
 
 TEST_F(blas2_signed_complex_double_fixture, hpx_scale_complex_factor)
@@ -123,11 +121,10 @@ TEST_F(blas2_signed_complex_double_fixture, hpx_scale_complex_factor)
         hpx_blas_scale_test_impl(HPXKernelsSTD::hpx_exec<>(), A_e0e1, factor);
         hpx_blas_scale_test_impl(hpx::execution::par, A_e0e1, factor);
         hpx_blas_scale_test_impl(hpx::execution::par_unseq, A_e0e1, factor);
-        // FIXME: not yet implemented
-        //#if defined(HPX_HAVE_DATAPAR)
-        //    hpx_blas_scale_test_impl(hpx::execution::simd, A_e0e1, factor);
-        //    hpx_blas_scale_test_impl(hpx::execution::par_simd, A_e0e1, factor);
-        //#endif
+        #if defined(HPX_HAVE_DATAPAR)
+           hpx_blas_scale_test_impl(hpx::execution::simd, A_e0e1, factor);
+           hpx_blas_scale_test_impl(hpx::execution::par_simd, A_e0e1, factor);
+        #endif
     }
 }
 
@@ -140,10 +137,9 @@ TEST_F(blas2_signed_complex_double_fixture, hpx_scale_double_factor)
         hpx_blas_scale_test_impl(HPXKernelsSTD::hpx_exec<>(), A_e0e1, 2.);
         hpx_blas_scale_test_impl(hpx::execution::par, A_e0e1, 2.);
         hpx_blas_scale_test_impl(hpx::execution::par_unseq, A_e0e1, 2.);
-        // FIXME: not yet implemented
-        //#if defined(HPX_HAVE_DATAPAR)
-        //    hpx_blas_scale_test_impl(hpx::execution::simd, A_e0e1, 2.);
-        //    hpx_blas_scale_test_impl(hpx::execution::par_simd, A_e0e1, 2.);
-        //#endif
+        #if defined(HPX_HAVE_DATAPAR)
+           hpx_blas_scale_test_impl(hpx::execution::simd, A_e0e1, 2.);
+           hpx_blas_scale_test_impl(hpx::execution::par_simd, A_e0e1, 2.);
+        #endif
     }
 }

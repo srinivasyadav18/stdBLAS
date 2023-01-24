@@ -14,6 +14,8 @@
 #include "exec_policy_wrapper_hpx.hpp"
 #include "signal_hpx_impl_called.hpp"
 
+#include "mditerator.hpp"
+
 namespace HPXKernelsSTD {
 
 namespace {
@@ -36,29 +38,28 @@ void linalg_scale_rank_1(ExPolicy&& policy, const Scalar alpha,
             // vectorize only if the array is contiguous and not strided
             if (x.is_contiguous() && x.stride(0) == 1)
             {
-                hpx::for_each(policy, x.data(), x.data() + x.extent(0),
-                    [&](auto& v) { v *= alpha; });
+                hpx::for_each(policy, mditerator_begin(x), mditerator_end(x), 
+                    [&](auto &i) { i *= alpha; });
             }
             else
             {
-                // fall back to the underlying base policy
-                hpx::experimental::for_loop(
-                    hpx::execution::experimental::to_non_simd(policy),
-                    SizeType(0), x.extent(0), [&](auto i) { x(i) *= alpha; });
+            hpx::for_each(hpx::execution::experimental::to_non_simd(policy),
+                mditerator_begin(x), mditerator_end(x), 
+                [&](auto &i) { i *= alpha; });
             }
         }
         else
         {
-            hpx::experimental::for_loop(
-                hpx::execution::experimental::to_non_simd(policy), SizeType(0),
-                x.extent(0), [&](auto i) { x(i) *= alpha; });
+            hpx::for_each(hpx::execution::experimental::to_non_simd(policy),
+                mditerator_begin(x), mditerator_end(x), 
+                [&](auto &i) { i *= alpha; });
         }
     }
     else
 #endif
     {
-        hpx::experimental::for_loop(
-            policy, SizeType(0), x.extent(0), [&](auto i) { x(i) *= alpha; });
+        hpx::for_each(policy, mditerator_begin(x), mditerator_end(x), 
+                [&](auto &i) { i *= alpha; });
     }
 }
 
@@ -70,12 +71,25 @@ void linalg_scale_rank_2(ExPolicy&& policy, const Scalar alpha,
         Accessor>
         A)
 {
-    hpx::experimental::for_loop(policy, SizeType(0), A.extent(1), [&](auto j) {
-        for (SizeType i = 0; i < A.extent(0); ++i)
+#if defined(HPX_HAVE_DATAPAR)
+    if constexpr (supports_vectorization_v<ExPolicy>)
+    {
+        hpx::for_each(hpx::execution::experimental::to_non_simd(policy),
+            mditerator_begin(A), mditerator_end(A), [&](auto j)
         {
-            A(i, j) *= alpha;
-        }
-    });
+            linalg_scale_rank_1(hpx::execution::experimental::to_non_par(policy), alpha, j);
+        });
+    }
+    else
+#endif
+    {
+        hpx::for_each(policy, mditerator_begin(A), mditerator_end(A), [&](auto j)
+        {
+            hpx::for_each(mditerator_begin(j), mditerator_end(j), [&](auto &i){
+                i *= alpha;
+            });
+        });
+    }
 }
 
 }    // namespace
