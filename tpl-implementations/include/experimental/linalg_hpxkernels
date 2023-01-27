@@ -6,7 +6,7 @@
 #include <hpx/execution.hpp>
 
 // blas1 (according to P1673)
-//#include "__p1673_bits/hpx-kernels/blas1_dot_hpx.hpp"
+#include "__p1673_bits/hpx-kernels/blas1_dot_hpx.hpp"
 #include "__p1673_bits/hpx-kernels/blas1_add_hpx.hpp"
 #include "__p1673_bits/hpx-kernels/blas1_scale_hpx.hpp"
 //#include "__p1673_bits/hpx-kernels/blas1_idx_abs_max_hpx.hpp"

@@ -1,6 +1,7 @@
 //  Copyright (c) 2022 Hartmut Kaiser
 
 #include <hpx/hpx_init.hpp>
+#include <hpx/include/datapar.hpp>
 
 #include <gtest/gtest.h>
 #include <iostream>

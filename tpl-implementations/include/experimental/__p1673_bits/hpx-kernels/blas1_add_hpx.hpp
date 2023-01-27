@@ -175,14 +175,30 @@ void add_rank_2(ExPolicy&& policy,
     static_assert(x.static_extent(1) == std::experimental::dynamic_extent ||
         y.static_extent(1) == std::experimental::dynamic_extent ||
         x.static_extent(1) == y.static_extent(1));
-
+#if defined(HPX_HAVE_DATAPAR)
+    if constexpr (supports_vectorization_v<ExPolicy>)
+    {
+        hpx::experimental::for_loop(hpx::execution::experimental::to_non_simd(policy),
+            SizeType_z(0), z.extent(0), [&](auto j) {
+                add_rank_1(
+                    hpx::execution::experimental::to_non_par(policy),
+                    std::experimental::submdspan(x, j, std::experimental::full_extent),
+                    std::experimental::submdspan(y, j, std::experimental::full_extent),
+                    std::experimental::submdspan(z, j, std::experimental::full_extent)
+                );
+            });
+    }
+    else
+#endif
+    {
     hpx::experimental::for_loop(
-        policy, SizeType_z(0), z.extent(1), [&](auto j) {
-            for (SizeType_z i = 0; i < z.extent(0); ++i)
+        policy, SizeType_z(0), z.extent(0), [&](auto i) {
+            for (SizeType_z j = 0; j < z.extent(1); ++j)
             {
                 z(i, j) = x(i, j) + y(i, j);
             }
         });
+    }
 }
 
 }    // end anonymous namespace
@@ -206,6 +222,7 @@ void add(hpx_exec<ExPolicy>&& policy,
         std::experimental::extents<SizeType_z, ext_z...>, Layout_z, Accessor_z>
         z)
 {
+    Impl::signal_hpx_impl_called("add");
     if constexpr (z.rank() == 1)
     {
         add_rank_1(policy.policy_, x, y, z);

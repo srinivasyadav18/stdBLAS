@@ -29,3 +29,7 @@ endif()
 if(LINALG_ENABLE_HPX)
   add_subdirectory(hpx-based)
 endif()
+
+if (LINALG_ENABLE_HPX_PERF_TESTS)
+  add_subdirectory(perf-tests)
+endif()
