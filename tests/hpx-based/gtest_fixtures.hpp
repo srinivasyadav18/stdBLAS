@@ -238,6 +238,8 @@ public:
         A_e0e1(A_e0e1_data.data(), myExtent0, myExtent1),
         B_e0e1_data(myExtent0 * myExtent1),
         B_e0e1(B_e0e1_data.data(), myExtent0, myExtent1),
+        C_e0e1_data(myExtent0 * myExtent1),
+        C_e0e1(C_e0e1_data.data(), myExtent0, myExtent1),
         A_sym_e0_data(myExtent0 * myExtent0),
         A_sym_e0(A_sym_e0_data.data(), myExtent0, myExtent0),
         A_hem_e0_data(myExtent0 * myExtent0),
@@ -285,6 +287,7 @@ public:
             // fill nonsym matrices and vectors
             fill_random_mdspan(randObj_r, randObj_i, A_e0e1);
             fill_random_mdspan(randObj_r, randObj_i, B_e0e1);
+            fill_random_mdspan(randObj_r, randObj_i, C_e0e1);
             fill_random_mdspan(randObj_r, randObj_i, x_e0);
             fill_random_mdspan(randObj_r, randObj_i, x_e1);
             fill_random_mdspan(randObj_r, randObj_i, y_e0);
@@ -320,6 +323,7 @@ public:
             // fill nonsym matrices and vectors
             fill_random_mdspan(randObj, A_e0e1);
             fill_random_mdspan(randObj, B_e0e1);
+            fill_random_mdspan(randObj, C_e0e1);
             fill_random_mdspan(randObj, x_e0);
             fill_random_mdspan(randObj, x_e1);
             fill_random_mdspan(randObj, y_e0);
@@ -329,6 +333,7 @@ public:
 
     std::vector<value_type> A_e0e1_data;
     std::vector<value_type> B_e0e1_data;
+    std::vector<value_type> C_e0e1_data;
     std::vector<value_type> A_sym_e0_data;
     std::vector<value_type> A_hem_e0_data;
     std::vector<value_type> x_e0_data;
@@ -342,6 +347,7 @@ public:
         extents<::std::size_t, dynamic_extent, dynamic_extent>>;
     mdspan_r2_t A_e0e1;      //e0 x e1
     mdspan_r2_t B_e0e1;      //e0 x e1
+    mdspan_r2_t C_e0e1;      //e0 x e1
     mdspan_r2_t A_sym_e0;    //e0 x e0, symmetric
     mdspan_r2_t A_hem_e0;    //e0 x e0, hermitian
 

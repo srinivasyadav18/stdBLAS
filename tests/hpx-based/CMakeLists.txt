@@ -51,15 +51,19 @@ endmacro()
 # blas1 (according to P1673)
 #
 
-#linalg_add_test_hpx(
-#  dot_hpx
-#  "dot: hpx impl")
+linalg_add_test_hpx(
+ dot_hpx
+ "dot: hpx impl")
 #linalg_add_test_hpx(
 #  dotc_hpx
 #  "dot: hpx impl") # this his not a typo, dotc calls dot underneath
 
 linalg_add_test_hpx(
   add_rank1_hpx
+  "add: hpx impl")
+
+linalg_add_test_hpx(
+  add_rank2_hpx
   "add: hpx impl")
 
 linalg_add_test_hpx(
