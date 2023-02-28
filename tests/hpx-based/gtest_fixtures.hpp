@@ -357,81 +357,81 @@ public:
     mdspan_r1_t z_e0;    // z vector with extent == e0
 };
 
-//template<class T>
-//class _blas3_signed_fixture : public _blas2_signed_fixture<T> {
-//  using base_t = _blas2_signed_fixture<T>;
-//
-//  // extents are arbitrarily chosen but not trivially small
-//  using base_t::myExtent0;
-//  using base_t::myExtent1;
-//  const std::size_t myExtent2 = 53;
-//
-//public:
-//  using value_type = T;
-//  using typename base_t::mdspan_r1_t;
-//  using typename base_t::mdspan_r2_t;
-//
-//  _blas3_signed_fixture()
-//      : base_t(), B_e0e2_data("B_e0e2_data", myExtent0, myExtent2), B_e0e2(B_e0e2_data.data(), myExtent0, myExtent2),
-//        B_e1e2_data("B_e1e2_data", myExtent1, myExtent2), B_e1e2(B_e1e2_data.data(), myExtent1, myExtent2),
-//        B_e2e1_data("B_e2e1_data", myExtent2, myExtent1), B_e2e1(B_e2e1_data.data(), myExtent2, myExtent1),
-//        C_e0e2_data("C_e0e2_data", myExtent0, myExtent2), C_e0e2(C_e0e2_data.data(), myExtent0, myExtent2),
-//        C_e1e2_data("C_e1e2_data", myExtent1, myExtent2), C_e1e2(C_e1e2_data.data(), myExtent1, myExtent2),
-//        C_e2e0_data("C_e2e0_data", myExtent2, myExtent0), C_e2e0(C_e2e0_data.data(), myExtent2, myExtent0),
-//        E_e0e2_data("E_e0e2_data", myExtent0, myExtent2), E_e0e2(E_e0e2_data.data(), myExtent0, myExtent2)
-//  {
-//
-//    static_check_value_type(value_type{});
-//
-//    if constexpr (std::is_same_v<T, std::complex<double>>) {
-//      const auto a_r = static_cast<double>(-5);
-//      const auto b_r = static_cast<double>(3);
-//      UnifDist<double> randObj_r(a_r, b_r);
-//
-//      const auto a_i = static_cast<double>(-9);
-//      const auto b_i = static_cast<double>(7);
-//      UnifDist<double> randObj_i(a_i, b_i);
-//
-//      fill_random_mdspan(randObj_r, randObj_i, B_e0e2);
-//      fill_random_mdspan(randObj_r, randObj_i, B_e1e2);
-//      fill_random_mdspan(randObj_r, randObj_i, B_e2e1);
-//      fill_random_mdspan(randObj_r, randObj_i, C_e0e2);
-//      fill_random_mdspan(randObj_r, randObj_i, C_e1e2);
-//      fill_random_mdspan(randObj_r, randObj_i, C_e2e0);
-//      fill_random_mdspan(randObj_r, randObj_i, E_e0e2);
-//    } else {
-//      const auto a = static_cast<value_type>(-5);
-//      const auto b = static_cast<value_type>(4);
-//      UnifDist<value_type> randObj(a, b);
-//
-//      fill_random_mdspan(randObj, B_e0e2);
-//      fill_random_mdspan(randObj, B_e1e2);
-//      fill_random_mdspan(randObj, B_e2e1);
-//      fill_random_mdspan(randObj, C_e0e2);
-//      fill_random_mdspan(randObj, C_e1e2);
-//      fill_random_mdspan(randObj, C_e2e0);
-//      fill_random_mdspan(randObj, E_e0e2);
-//    }
-//  }
-//
-//  std::vector<value_type> B_e0e2_data;
-//  std::vector<value_type> B_e1e2_data;
-//  std::vector<value_type> B_e2e1_data;
-//  std::vector<value_type> C_e0e2_data;
-//  std::vector<value_type> C_e1e2_data;
-//  std::vector<value_type> C_e2e0_data;
-//  std::vector<value_type> E_e0e2_data;
-//
-//  mdspan_r2_t B_e0e2; //e0 x e2
-//  mdspan_r2_t B_e1e2; //e1 x e2
-//  mdspan_r2_t B_e2e1; //e2 x e1
-//
-//  mdspan_r2_t C_e0e2; //e0 x e2
-//  mdspan_r2_t C_e1e2; //e1 x e2
-//  mdspan_r2_t C_e2e0; //e2 x e0
-//
-//  mdspan_r2_t E_e0e2; //e0 x e2
-//};
+template<class T>
+class _blas3_signed_fixture : public _blas2_signed_fixture<T> {
+ using base_t = _blas2_signed_fixture<T>;
+
+ // extents are arbitrarily chosen but not trivially small
+ using base_t::myExtent0;
+ using base_t::myExtent1;
+ const std::size_t myExtent2 = 53;
+
+public:
+ using value_type = T;
+ using typename base_t::mdspan_r1_t;
+ using typename base_t::mdspan_r2_t;
+
+ _blas3_signed_fixture()
+     : base_t(), B_e0e2_data(myExtent0*myExtent2), B_e0e2(B_e0e2_data.data(), myExtent0, myExtent2),
+       B_e1e2_data(myExtent1*myExtent2), B_e1e2(B_e1e2_data.data(), myExtent1, myExtent2),
+       B_e2e1_data(myExtent2*myExtent1), B_e2e1(B_e2e1_data.data(), myExtent2, myExtent1),
+       C_e0e2_data(myExtent0*myExtent2), C_e0e2(C_e0e2_data.data(), myExtent0, myExtent2),
+       C_e1e2_data(myExtent1*myExtent2), C_e1e2(C_e1e2_data.data(), myExtent1, myExtent2),
+       C_e2e0_data(myExtent2*myExtent0), C_e2e0(C_e2e0_data.data(), myExtent2, myExtent0),
+       E_e0e2_data(myExtent0*myExtent2), E_e0e2(E_e0e2_data.data(), myExtent0, myExtent2)
+{
+
+   static_check_value_type(value_type{});
+
+   if constexpr (std::is_same_v<T, std::complex<double>>) {
+     const auto a_r = static_cast<double>(-5);
+     const auto b_r = static_cast<double>(3);
+     UnifDist<double> randObj_r(a_r, b_r);
+
+     const auto a_i = static_cast<double>(-9);
+     const auto b_i = static_cast<double>(7);
+     UnifDist<double> randObj_i(a_i, b_i);
+
+     fill_random_mdspan(randObj_r, randObj_i, B_e0e2);
+     fill_random_mdspan(randObj_r, randObj_i, B_e1e2);
+     fill_random_mdspan(randObj_r, randObj_i, B_e2e1);
+     fill_random_mdspan(randObj_r, randObj_i, C_e0e2);
+     fill_random_mdspan(randObj_r, randObj_i, C_e1e2);
+     fill_random_mdspan(randObj_r, randObj_i, C_e2e0);
+     fill_random_mdspan(randObj_r, randObj_i, E_e0e2);
+   } else {
+     const auto a = static_cast<value_type>(-5);
+     const auto b = static_cast<value_type>(4);
+     UnifDist<value_type> randObj(a, b);
+
+     fill_random_mdspan(randObj, B_e0e2);
+     fill_random_mdspan(randObj, B_e1e2);
+     fill_random_mdspan(randObj, B_e2e1);
+     fill_random_mdspan(randObj, C_e0e2);
+     fill_random_mdspan(randObj, C_e1e2);
+     fill_random_mdspan(randObj, C_e2e0);
+     fill_random_mdspan(randObj, E_e0e2);
+   }
+ }
+
+ std::vector<value_type> B_e0e2_data;
+ std::vector<value_type> B_e1e2_data;
+ std::vector<value_type> B_e2e1_data;
+ std::vector<value_type> C_e0e2_data;
+ std::vector<value_type> C_e1e2_data;
+ std::vector<value_type> C_e2e0_data;
+ std::vector<value_type> E_e0e2_data;
+
+ mdspan_r2_t B_e0e2; //e0 x e2
+ mdspan_r2_t B_e1e2; //e1 x e2
+ mdspan_r2_t B_e2e1; //e2 x e1
+
+ mdspan_r2_t C_e0e2; //e0 x e2
+ mdspan_r2_t C_e1e2; //e1 x e2
+ mdspan_r2_t C_e2e0; //e2 x e0
+
+ mdspan_r2_t E_e0e2; //e0 x e2
+};
 
 using blas1_signed_float_fixture = _blas1_signed_fixture<float>;
 using blas1_signed_double_fixture = _blas1_signed_fixture<double>;
@@ -443,8 +443,8 @@ using blas2_signed_double_fixture = _blas2_signed_fixture<double>;
 using blas2_signed_complex_double_fixture =
     _blas2_signed_fixture<std::complex<double>>;
 
-//using blas3_signed_float_fixture = _blas3_signed_fixture<float>;
-//using blas3_signed_double_fixture = _blas3_signed_fixture<double>;
-//using blas3_signed_complex_double_fixture = _blas3_signed_fixture<std::complex<double>>;
+using blas3_signed_float_fixture = _blas3_signed_fixture<float>;
+using blas3_signed_double_fixture = _blas3_signed_fixture<double>;
+using blas3_signed_complex_double_fixture = _blas3_signed_fixture<std::complex<double>>;
 
 #endif

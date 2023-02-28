@@ -101,7 +101,7 @@ template<class ExeSpace,
          class Layout_x,
          class ElementType_y,
          std::experimental::extents<>::size_type ext_y,
-	 class Layout_y,
+	       class Layout_y,
          class ElementType_z,
          std::experimental::extents<>::size_type ext_z,
          class Layout_z>

@@ -112,12 +112,12 @@ linalg_add_test_hpx(
 # blas2 (according to P1673)
 #
 
-#linalg_add_test_hpx(
-#  overwriting_matrix_vector_product
-#  "overwriting_matrix_vector_product: hpx impl")
-#linalg_add_test_hpx(
-#  updating_matrix_vector_product
-#  "updating_matrix_vector_product: hpx impl")
+linalg_add_test_hpx(
+ overwriting_matrix_vector_product_hpx
+ "overwriting_matrix_vector_product: hpx impl")
+linalg_add_test_hpx(
+ updating_matrix_vector_product_hpx
+ "updating_matrix_vector_product: hpx impl")
 
 # symmetric_matrix_vector_product
 #linalg_add_test_hpx(
@@ -184,9 +184,9 @@ linalg_add_test_hpx(
 #
 
 # matrix_product
-#linalg_add_test_hpx(
-#  gemm_C_AB
-#  "gemm_C_AB_product: hpx impl")
+linalg_add_test_hpx(
+ gemm_C_AB_hpx
+ "gemm_C_AB_product: hpx impl")
 #linalg_add_test_hpx(
 #  gemm_C_ABT
 #  "gemm_C_ABT_product: hpx impl")
