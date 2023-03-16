@@ -174,7 +174,7 @@ template <class T>
 class _blas1_signed_fixture : public ::testing::Test
 {
     // extent is arbitrarily chosen but not trivially small
-    const std::size_t myExtent = 137;
+    const std::size_t myExtent = 128;
 
 public:
     using value_type = T;
@@ -227,8 +227,8 @@ class _blas2_signed_fixture : public ::testing::Test
 {
 protected:
     // extents are arbitrarily chosen but not trivially small
-    const std::size_t myExtent0 = 77;
-    const std::size_t myExtent1 = 41;
+    const std::size_t myExtent0 = 64;
+    const std::size_t myExtent1 = 64;
 
 public:
     using value_type = T;
@@ -364,7 +364,7 @@ class _blas3_signed_fixture : public _blas2_signed_fixture<T> {
  // extents are arbitrarily chosen but not trivially small
  using base_t::myExtent0;
  using base_t::myExtent1;
- const std::size_t myExtent2 = 53;
+ const std::size_t myExtent2 = 64;
 
 public:
  using value_type = T;

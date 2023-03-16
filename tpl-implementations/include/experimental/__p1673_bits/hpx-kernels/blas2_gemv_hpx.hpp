@@ -41,10 +41,23 @@ void matrix_vector_product(hpx_exec<ExPolicy>&& policy,
 
   Impl::signal_hpx_impl_called("overwriting_matrix_vector_product");
 
-  for (std::size_t i = 0; i < A.extent(0); ++i) {
-    y(i) = ElementType_y{};
-    for (std::size_t j = 0; j < A.extent(1); ++j) {
-      y(i) += A(i,j) * x(j);
+  // for (std::size_t i = 0; i < A.extent(0); ++i) {
+  //   y(i) = ElementType_y{};
+  //   for (std::size_t j = 0; j < A.extent(1); ++j) {
+  //     y(i) += A(i,j) * x(j);
+  //   }
+  // }
+  const int block_size = 64;
+  for (int ii = 0; ii < A.extent(0); ii += block_size) {
+    for (int i = ii; i < ii+block_size; i++) {
+      y(i) = ElementType_y{};
+    }
+    for (int jj = 0; jj < A.extent(1); jj += block_size) {
+      for (int i = ii; i < ii+block_size; ++i){
+        for (int j = jj; j < jj+block_size; ++j){
+          y(i) += A(i, j) * x(j);
+        }
+      }
     }
   }
 }
@@ -91,12 +104,27 @@ void matrix_vector_product(hpx_exec<ExPolicy>&& policy,
 
   Impl::signal_hpx_impl_called("updating_matrix_vector_product");
 
-  for (std::size_t i = 0; i < A.extent(0); ++i) {
-    z(i) = ElementType_z{};
+  // for (std::size_t i = 0; i < A.extent(0); ++i) {
+  //   z(i) = ElementType_z{};
 
-    for (std::size_t j = 0; j < A.extent(1); ++j) {
-      // z(i) += A(i,j) * x(j);
-      z(i) += y(i) + A(i,j) * x(j);
+  //   for (std::size_t j = 0; j < A.extent(1); ++j) {
+  //     // z(i) += A(i,j) * x(j);
+  //     z(i) += y(i) + A(i,j) * x(j);
+  //   }
+  // }
+
+
+  const int block_size = 64;
+  for (int ii = 0; ii < A.extent(0); ii += block_size) {
+    for (int i = ii; i < ii+block_size; i++) {
+      z(i) = ElementType_z{};
+    }
+    for (int jj = 0; jj < A.extent(1); jj += block_size) {
+      for (int i = ii; i < ii+block_size; ++i){
+        for (int j = jj; j < jj+block_size; ++j){
+          z(i) += y(i) + A(i,j) * x(j);
+        }
+      }
     }
   }
 }

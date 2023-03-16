@@ -371,23 +371,22 @@ struct is_custom_matrix_product_avail : std::false_type {};
 template <class Exec, class A_t, class B_t, class E_t, class C_t, class = void>
 struct is_custom_matrix_product_with_update_avail : std::false_type {};
 
-template <class Exec, class A_t, class B_t, class E_t, class C_t>
-struct is_custom_matrix_product_with_update_avail<
-  Exec, A_t, B_t, E_t, C_t,
-  std::enable_if_t<
-    std::is_void_v<
-      decltype(
-	       matrix_product
-	       (std::declval<Exec>(),
-		std::declval<A_t>(),
-		std::declval<B_t>(),
-		std::declval<E_t>(),
-		std::declval<C_t>()))
-      >
-    && !linalg::impl::is_inline_exec_v<Exec>
-    >
-  >
-  : std::true_type{};
+template <class Exec, class A_t, class B_t, class C_t>
+ struct is_custom_matrix_product_avail<
+   Exec, A_t, B_t, C_t,
+   std::enable_if_t<
+     std::is_void_v<
+       decltype(
+ 	       matrix_product
+ 	       (std::declval<Exec>(),
+ 		std::declval<A_t>(),
+ 		std::declval<B_t>(),
+ 		std::declval<C_t>()))
+       >
+     && !linalg::impl::is_inline_exec_v<Exec>
+     >
+   >
+   : std::true_type{};
 
 
 template <class Exec, class A_t, class Tr_t, class DiagSt_t, class B_t, class C_t, class = void>
@@ -757,6 +756,7 @@ void matrix_product(
   constexpr bool use_custom = is_custom_matrix_product_avail<
     decltype(execpolicy_mapper(exec)), decltype(A), decltype(B), decltype(C)>::value;
 
+  std::cout << "deb : MP : " << use_custom << "\n";
   if constexpr(use_custom) {
     matrix_product(execpolicy_mapper(exec), A, B, C);
   } else {

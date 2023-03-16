@@ -125,30 +125,30 @@ void hpx_blas_gemm_impl(ExPolicy policy, A_t A, B_t B, C_t C)
 }
 }//end anonym namespace
 
-vasu vasu_{};
-
 TEST_F(blas3_signed_float_fixture, hpx_gemm_C_AB)
 {
-  std::cout << "deb\n";
+  std::cout << "debf\n";
   hpx_blas_gemm_impl(HPXKernelsSTD::hpx_exec<>(),A_e0e1, B_e1e2, C_e0e2);
   hpx_blas_gemm_impl(hpx::execution::par,A_e0e1, B_e1e2, C_e0e2);
   hpx_blas_gemm_impl(hpx::execution::par_unseq,A_e0e1, B_e1e2, C_e0e2);
 }
 
-// TEST_F(blas3_signed_double_fixture, hpx_gemm_C_AB)
-// {
-//   hpx_blas_gemm_impl(HPXKernelsSTD::hpx_exec<>(),A_e0e1, B_e1e2, C_e0e2);
-//   hpx_blas_gemm_impl(hpx::execution::par,A_e0e1, B_e1e2, C_e0e2);
-//   hpx_blas_gemm_impl(hpx::execution::par_unseq,A_e0e1, B_e1e2, C_e0e2);
-// }
+TEST_F(blas3_signed_double_fixture, hpx_gemm_C_AB)
+{
+  std::cout << "debd\n";
 
-// TEST_F(blas3_signed_complex_double_fixture, hpx_gemm_C_AB)
-// {
-//   using kc_t = std::complex<double>;
-//   using stdc_t = value_type;
-//   if constexpr (alignof(value_type) == alignof(kc_t)){
-//     hpx_blas_gemm_impl(HPXKernelsSTD::hpx_exec<>(),A_e0e1, B_e1e2, C_e0e2);
-//     hpx_blas_gemm_impl(hpx::execution::par,A_e0e1, B_e1e2, C_e0e2);
-//     hpx_blas_gemm_impl(hpx::execution::par_unseq,A_e0e1, B_e1e2, C_e0e2);
-//   }
-// }
+  hpx_blas_gemm_impl(HPXKernelsSTD::hpx_exec<>(),A_e0e1, B_e1e2, C_e0e2);
+  hpx_blas_gemm_impl(hpx::execution::par,A_e0e1, B_e1e2, C_e0e2);
+  hpx_blas_gemm_impl(hpx::execution::par_unseq,A_e0e1, B_e1e2, C_e0e2);
+}
+
+TEST_F(blas3_signed_complex_double_fixture, hpx_gemm_C_AB)
+{
+  using kc_t = std::complex<double>;
+  using stdc_t = value_type;
+  if constexpr (alignof(value_type) == alignof(kc_t)){
+    hpx_blas_gemm_impl(HPXKernelsSTD::hpx_exec<>(),A_e0e1, B_e1e2, C_e0e2);
+    hpx_blas_gemm_impl(hpx::execution::par,A_e0e1, B_e1e2, C_e0e2);
+    hpx_blas_gemm_impl(hpx::execution::par_unseq,A_e0e1, B_e1e2, C_e0e2);
+  }
+}

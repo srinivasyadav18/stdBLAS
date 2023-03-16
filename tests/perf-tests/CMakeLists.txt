@@ -3,6 +3,13 @@ enable_testing()
 set (perf_tests 
     add
     dot
+    gemv
+    gemv_blocked
+    gemm
+    gemm_hpx
+    gemm_blocked
+    gemm_blocked_mdspan
+    gemm_blocked_mdspan_hpx
 )
 
 foreach(perf_test ${perf_tests})
