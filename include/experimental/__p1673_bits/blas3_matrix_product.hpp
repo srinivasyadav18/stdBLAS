@@ -756,7 +756,6 @@ void matrix_product(
   constexpr bool use_custom = is_custom_matrix_product_avail<
     decltype(execpolicy_mapper(exec)), decltype(A), decltype(B), decltype(C)>::value;
 
-  std::cout << "deb : MP : " << use_custom << "\n";
   if constexpr(use_custom) {
     matrix_product(execpolicy_mapper(exec), A, B, C);
   } else {

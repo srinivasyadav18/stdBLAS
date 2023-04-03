@@ -6,6 +6,7 @@ set (perf_tests
     gemv
     gemv_blocked
     gemm
+    gemm_all
     gemm_hpx
     gemm_blocked
     gemm_blocked_mdspan

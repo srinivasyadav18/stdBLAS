@@ -65,18 +65,25 @@ void test3(T n)
 
     std::ofstream fout(file_name.c_str());
 
+
+    fout << "N,GFLOPs,GBW,time_seq,time_par,gf_s,gf_p,bw_s,bw_p\n";
+
     for (int i = 10; i <= 15; i++)
     {
-        T curr_n = T(std::pow(2, i));
-        double gflops = (curr_n * curr_n * curr_n)/1e9;
-        double ts = test(hpx::execution::seq, T(curr_n));
-        double tp = test(hpx::execution::par, T(curr_n));
+        T n = T(std::pow(2, i));
+        double gflops = (n * n * n)/1e9;    // n^3 madds
+        double dram_bw = (n*n*n + 3*n*n)/1e9; // n^3 + 3n^2
+        double ts = test(hpx::execution::seq, T(n));
+        double tp = test(hpx::execution::par, T(n));
         fout << i << ',';
         fout << gflops << ',';
+        fout << dram_bw << ',';
         fout << ts << ',';
         fout << tp << ',';
         fout << gflops/ts << ',';
-        fout << gflops/tp << '\n';
+        fout << gflops/tp << ',';
+        fout << dram_bw/ts << ',';
+        fout << dram_bw/tp << '\n';
 
         fout.flush();
     }
